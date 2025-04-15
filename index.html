@@ -4,9 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Phelps Rural Development App</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="logo.png" type="image/png" />
+  <meta name="theme-color" content="#1a3c2f" />
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
     header { background: #1a3c2f; color: white; padding: 20px; text-align: center; }
+    header img { width: 100px; margin-bottom: 10px; }
     nav { display: flex; flex-wrap: wrap; justify-content: space-around; background: #2f4f4f; padding: 10px; gap: 5px; }
     .tab-btn { background: none; border: none; color: white; font-weight: bold; cursor: pointer; padding: 10px; }
     .tab-btn:hover { text-decoration: underline; }
@@ -20,6 +24,7 @@
 </head>
 <body>
   <header>
+    <img src="logo.png" alt="Phelps Logo" />
     <h1>Phelps Rural Development</h1>
     <p>Installable Business App</p>
   </header>
@@ -39,43 +44,25 @@
     <p>This is the official app for Phelps Rural Development, LLC.</p>
   </section>
 
-  <section id="gallery">
-    <h2>Project Gallery</h2>
-    <p>Gallery coming soon...</p>
-  </section>
-
+  <section id="gallery"><h2>Project Gallery</h2><p>Gallery coming soon...</p></section>
   <section id="documents">
     <h2>Documents</h2>
     <a class="button" href="files/Expanded_Job_Application_Phelps_RD.pdf" download>Job Application (PDF)</a><br>
     <a class="button" href="files/Corrected_Invoice_Template_Phelps_RD.pdf" download>Invoice Template (PDF)</a><br>
     <a class="button" href="files/Corrected_Quote_Request_Phelps_RD.pdf" download>Quote Request Form (PDF)</a>
   </section>
-
-  <section id="schedule">
-    <h2>Schedule</h2>
-    <p>Current jobs and availability (feature in development).</p>
-  </section>
-
+  <section id="schedule"><h2>Schedule</h2><p>Current jobs and availability (feature in development).</p></section>
   <section id="timesheet">
     <h2>Worker Timesheet</h2>
     <form onsubmit="saveTimesheet(); return false;">
-      <label>Name:</label>
-      <input type="text" id="tsName" required />
-      <label>Date:</label>
-      <input type="date" id="tsDate" required />
-      <label>Job Site:</label>
-      <input type="text" id="tsJob" required />
-      <label>Hours Worked:</label>
-      <input type="number" id="tsHours" step="0.1" required />
+      <label>Name:</label><input type="text" id="tsName" required />
+      <label>Date:</label><input type="date" id="tsDate" required />
+      <label>Job Site:</label><input type="text" id="tsJob" required />
+      <label>Hours Worked:</label><input type="number" id="tsHours" step="0.1" required />
       <input class="button" type="submit" value="Submit Timesheet" />
     </form>
   </section>
-
-  <section id="pay">
-    <h2>Make a Payment</h2>
-    <p>Online payments coming soon. Please check back later.</p>
-  </section>
-
+  <section id="pay"><h2>Make a Payment</h2><p>Online payments coming soon. Please check back later.</p></section>
   <section id="admin">
     <h2>Admin Panel</h2>
     <p><strong>Login to access tools</strong></p>
@@ -84,23 +71,16 @@
     <div id="adminContent" style="display:none">
       <h3>Create Invoice</h3>
       <form onsubmit="generateInvoice(); return false;">
-        <label>Client Name:</label>
-        <input type="text" id="clientName" required />
-        <label>Client Email:</label>
-        <input type="email" id="clientEmail" required />
-        <label>Job Description:</label>
-        <textarea id="jobDescription" required></textarea>
-        <label>Materials Cost ($):</label>
-        <input type="number" id="materialsCost" step="0.01" required />
-        <label>Labor Cost ($):</label>
-        <input type="number" id="laborCost" step="0.01" required />
-        <label>Payment Terms:</label>
-        <input type="text" id="paymentTerms" placeholder="e.g., Due on receipt" />
+        <label>Client Name:</label><input type="text" id="clientName" required />
+        <label>Client Email:</label><input type="email" id="clientEmail" required />
+        <label>Job Description:</label><textarea id="jobDescription" required></textarea>
+        <label>Materials Cost ($):</label><input type="number" id="materialsCost" step="0.01" required />
+        <label>Labor Cost ($):</label><input type="number" id="laborCost" step="0.01" required />
+        <label>Payment Terms:</label><input type="text" id="paymentTerms" placeholder="e.g., Due on receipt" />
         <input class="button" type="submit" value="Generate Invoice" />
       </form>
       <div id="invoicePreview" class="invoice-preview" style="display:none;"></div>
       <button class="button" onclick="window.print()" style="display:none;" id="printBtn">Print Invoice</button>
-
       <h3>Timesheet Log</h3>
       <div id="timesheetLog" class="log-box"></div>
     </div>
@@ -132,11 +112,9 @@
       const total = (parseFloat(materials) + parseFloat(labor)).toFixed(2);
       const html = `
         <h3>Invoice</h3>
-        <p><strong>Client:</strong> ${name}<br>
-        <strong>Email:</strong> ${email}</p>
+        <p><strong>Client:</strong> ${name}<br><strong>Email:</strong> ${email}</p>
         <p><strong>Description:</strong><br>${job}</p>
-        <p><strong>Materials:</strong> $${materials}<br>
-        <strong>Labor:</strong> $${labor}</p>
+        <p><strong>Materials:</strong> $${materials}<br><strong>Labor:</strong> $${labor}</p>
         <p><strong>Total Due:</strong> <strong>$${total}</strong></p>
         <p><strong>Payment Terms:</strong> ${terms}</p>
       `;
@@ -168,6 +146,14 @@
           <strong>${e.name}</strong> on <strong>${e.date}</strong><br>
           Job Site: ${e.job} | Hours: ${e.hours}
         </div>`).join('');
+    }
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(reg => console.log('Service Worker registered!', reg))
+          .catch(err => console.error('SW registration failed:', err));
+      });
     }
   </script>
 </body>
