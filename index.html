@@ -160,4 +160,15 @@
       document.querySelector('#timesheet form').reset();
     }
 
-    function display
+    function displayTimesheetLog() {
+      const logs = JSON.parse(localStorage.getItem('timesheetLogs') || '[]');
+      const logBox = document.getElementById('timesheetLog');
+      logBox.innerHTML = logs.map(e => `
+        <div class="log-entry">
+          <strong>${e.name}</strong> on <strong>${e.date}</strong><br>
+          Job Site: ${e.job} | Hours: ${e.hours}
+        </div>`).join('');
+    }
+  </script>
+</body>
+</html>
