@@ -24,13 +24,13 @@
   </header>
 
   <nav>
-    <a href="#home" onclick="showTab('home')">Home</a>
-    <a href="#gallery" onclick="showTab('gallery')">Gallery</a>
-    <a href="#documents" onclick="showTab('documents')">Documents</a>
-    <a href="#schedule" onclick="showTab('schedule')">Schedule</a>
-    <a href="#timesheet" onclick="showTab('timesheet')">Timesheet</a>
-    <a href="#pay" onclick="showTab('pay')">Pay</a>
-    <a href="#admin" onclick="showTab('admin')">Admin</a>
+    <a href="#" onclick="showTab('home'); return false;">Home</a>
+    <a href="#" onclick="showTab('gallery'); return false;">Gallery</a>
+    <a href="#" onclick="showTab('documents'); return false;">Documents</a>
+    <a href="#" onclick="showTab('schedule'); return false;">Schedule</a>
+    <a href="#" onclick="showTab('timesheet'); return false;">Timesheet</a>
+    <a href="#" onclick="showTab('pay'); return false;">Pay</a>
+    <a href="#" onclick="showTab('admin'); return false;">Admin</a>
   </nav>
 
   <section id="home" class="active">
@@ -45,4 +45,57 @@
 
   <section id="documents">
     <h2>Documents</h2>
-    <a class="button
+    <a class="button" href="files/Expanded_Job_Application_Phelps_RD.pdf" download>Job Application (PDF)</a><br>
+    <a class="button" href="files/Corrected_Invoice_Template_Phelps_RD.pdf" download>Invoice Template (PDF)</a><br>
+    <a class="button" href="files/Corrected_Quote_Request_Phelps_RD.pdf" download>Quote Request Form (PDF)</a>
+  </section>
+
+  <section id="schedule">
+    <h2>Schedule</h2>
+    <p>Current jobs and availability (feature in development).</p>
+  </section>
+
+  <section id="timesheet">
+    <h2>Worker Timesheet</h2>
+    <form onsubmit="saveTimesheet(); return false;">
+      <label>Name:</label>
+      <input type="text" id="tsName" required />
+      <label>Date:</label>
+      <input type="date" id="tsDate" required />
+      <label>Job Site:</label>
+      <input type="text" id="tsJob" required />
+      <label>Hours Worked:</label>
+      <input type="number" id="tsHours" step="0.1" required />
+      <input class="button" type="submit" value="Submit Timesheet" />
+    </form>
+  </section>
+
+  <section id="pay">
+    <h2>Make a Payment</h2>
+    <p>Online payments coming soon. Please check back later.</p>
+  </section>
+
+  <section id="admin">
+    <h2>Admin Panel</h2>
+    <p><strong>Login to access tools</strong></p>
+    <input type="password" id="adminPass" placeholder="Enter Admin Password" />
+    <button class="button" onclick="unlockAdmin()">Login</button>
+    <div id="adminContent" style="display:none">
+      <h3>Create Invoice</h3>
+      <form onsubmit="generateInvoice(); return false;">
+        <label>Client Name:</label>
+        <input type="text" id="clientName" required />
+        <label>Client Email:</label>
+        <input type="email" id="clientEmail" required />
+        <label>Job Description:</label>
+        <textarea id="jobDescription" required></textarea>
+        <label>Materials Cost ($):</label>
+        <input type="number" id="materialsCost" step="0.01" required />
+        <label>Labor Cost ($):</label>
+        <input type="number" id="laborCost" step="0.01" required />
+        <label>Payment Terms:</label>
+        <input type="text" id="paymentTerms" placeholder="e.g., Due on receipt" />
+        <input class="button" type="submit" value="Generate Invoice" />
+      </form>
+      <div id="invoicePreview" class="invoice-preview" style="display:none;"></div>
+      <button class="button" onclick="window
