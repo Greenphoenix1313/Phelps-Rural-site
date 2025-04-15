@@ -1,132 +1,48 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Phelps Rural Development, LLC</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phelps Rural Development App</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
-    }
-    header {
-      background-color: #1a3c2f;
-      color: #fff;
-      padding: 20px 0;
-      text-align: center;
-    }
-    header img {
-      width: 80px;
-      height: auto;
-    }
-    nav {
-      background-color: #2f4f4f;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 10px;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .container {
-      padding: 30px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .gallery img {
-      max-width: 100%;
-      height: auto;
-      margin: 10px 0;
-    }
-    footer {
-      background-color: #1a3c2f;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-    .button {
-      background-color: #2e8b57;
-      color: white;
-      padding: 10px 20px;
-      text-decoration: none;
-      border-radius: 5px;
-      display: inline-block;
-      margin-top: 20px;
-    }
-    .downloads a {
-      display: block;
-      margin: 10px 0;
-      color: #2f4f4f;
-      text-decoration: none;
-      font-weight: bold;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
+    header { background: #1a3c2f; color: white; padding: 20px; text-align: center; }
+    nav { display: flex; flex-wrap: wrap; justify-content: space-around; background: #2f4f4f; padding: 10px; }
+    nav a { color: white; text-decoration: none; padding: 10px; font-weight: bold; }
+    section { display: none; padding: 20px; }
+    section.active { display: block; }
+    .button { background: #2e8b57; color: white; padding: 10px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px; }
+    input, textarea, select { width: 100%; padding: 8px; margin: 8px 0; box-sizing: border-box; }
+    .invoice-preview, .log-box { border: 1px solid #ccc; background: white; padding: 20px; margin-top: 20px; }
+    .log-entry { margin-bottom: 10px; border-bottom: 1px dashed #ccc; padding-bottom: 5px; }
   </style>
 </head>
-<body>  <header>
-    <img src="logo.png" alt="Company Logo">
-    <h1>Phelps Rural Development, LLC</h1>
-    <p>Building strong communities through construction and renovation</p>
-  </header>  <nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#contact">Contact</a>
-    <a href="#documents">Documents</a>
-  </nav>  <div class="container">
-    <section id="about">
-      <h2>About Us</h2>
-      <p>Phelps Rural Development, LLC is dedicated to revitalizing communities across Missouri with expert craftsmanship, rural values, and a strong commitment to quality. We specialize in renovations, new builds, and rural infrastructure development.</p>
-    </section><section id="services">
-  <h2>Our Services</h2>
-  <ul>
-    <li>Residential & Commercial Construction</li>
-    <li>Renovations & Remodeling</li>
-    <li>Roofing & Siding</li>
-    <li>Foundations & Framing</li>
-    <li>Custom Builds</li>
-    <li>Site Development & Clearing</li>
-  </ul>
-</section>
+<body>
+  <header>
+    <h1>Phelps Rural Development</h1>
+    <p>Installable Business App</p>
+  </header>
 
-<section id="gallery">
-  <h2>Project Gallery</h2>
-  <div class="gallery">
-    <img src="project1.jpg" alt="Project 1">
-    <img src="project2.jpg" alt="Project 2">
-    <img src="project3.jpg" alt="Project 3">
-  </div>
-</section>
+  <nav>
+    <a href="#home" onclick="showTab('home')">Home</a>
+    <a href="#gallery" onclick="showTab('gallery')">Gallery</a>
+    <a href="#documents" onclick="showTab('documents')">Documents</a>
+    <a href="#schedule" onclick="showTab('schedule')">Schedule</a>
+    <a href="#timesheet" onclick="showTab('timesheet')">Timesheet</a>
+    <a href="#pay" onclick="showTab('pay')">Pay</a>
+    <a href="#admin" onclick="showTab('admin')">Admin</a>
+  </nav>
 
-<section id="contact">
-  <h2>Contact Us</h2>
-  <p>Owner: Phillip Phelps</p>
-  <p>Email: <a href="mailto:Pphelps018@gmail.com">Pphelps018@gmail.com</a></p>
-  <p>Phone: (573) 660-3492</p>
-  <p>Alternate: (573) 593-4772</p>
-  <p>SEE US FOR ALL YOUR BUILDING NEEDS</p>
-  <a class="button" href="mailto:Pphelps018@gmail.com">Request a Quote</a>
-</section>
+  <section id="home" class="active">
+    <h2>Welcome</h2>
+    <p>This is the official app for Phelps Rural Development, LLC.</p>
+  </section>
 
-<section id="documents">
-  <h2>Documents & Downloads</h2>
-  <div class="downloads">
-    <a href="files/Expanded_Job_Application_Phelps_RD.pdf" download>Job Application (PDF)</a>
-    <a href="files/Corrected_Invoice_Template_Phelps_RD.pdf" download>Invoice Template (PDF)</a>
-    <a href="files/Corrected_Quote_Request_Phelps_RD.pdf" download>Quote Request Form (PDF)</a>
-  </div>
-</section>
+  <section id="gallery">
+    <h2>Project Gallery</h2>
+    <p>Gallery coming soon...</p>
+  </section>
 
-  </div>  <footer>
-    <p>&copy; 2025 Phelps Rural Development, LLC | Built with pride in Missouri</p>
-    <p>
-      <a href="#" style="color: #ccc; text-decoration: none;">Facebook</a> |
-      <a href="#" style="color: #ccc; text-decoration: none;">Instagram</a>
-    </p>
-  </footer></body>
-</html>
+  <section id="documents">
+    <h2>Documents</h2>
+    <a class="button
