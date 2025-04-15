@@ -7,8 +7,9 @@
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
     header { background: #1a3c2f; color: white; padding: 20px; text-align: center; }
-    nav { display: flex; flex-wrap: wrap; justify-content: space-around; background: #2f4f4f; padding: 10px; }
-    nav a { color: white; text-decoration: none; padding: 10px; font-weight: bold; }
+    nav { display: flex; flex-wrap: wrap; justify-content: space-around; background: #2f4f4f; padding: 10px; gap: 5px; }
+    .tab-btn { background: none; border: none; color: white; font-weight: bold; cursor: pointer; padding: 10px; }
+    .tab-btn:hover { text-decoration: underline; }
     section { display: none; padding: 20px; }
     section.active { display: block; }
     .button { background: #2e8b57; color: white; padding: 10px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px; }
@@ -24,13 +25,13 @@
   </header>
 
   <nav>
-    <a href="#" onclick="showTab('home'); return false;">Home</a>
-    <a href="#" onclick="showTab('gallery'); return false;">Gallery</a>
-    <a href="#" onclick="showTab('documents'); return false;">Documents</a>
-    <a href="#" onclick="showTab('schedule'); return false;">Schedule</a>
-    <a href="#" onclick="showTab('timesheet'); return false;">Timesheet</a>
-    <a href="#" onclick="showTab('pay'); return false;">Pay</a>
-    <a href="#" onclick="showTab('admin'); return false;">Admin</a>
+    <button class="tab-btn" onclick="showTab('home')">Home</button>
+    <button class="tab-btn" onclick="showTab('gallery')">Gallery</button>
+    <button class="tab-btn" onclick="showTab('documents')">Documents</button>
+    <button class="tab-btn" onclick="showTab('schedule')">Schedule</button>
+    <button class="tab-btn" onclick="showTab('timesheet')">Timesheet</button>
+    <button class="tab-btn" onclick="showTab('pay')">Pay</button>
+    <button class="tab-btn" onclick="showTab('admin')">Admin</button>
   </nav>
 
   <section id="home" class="active">
@@ -98,4 +99,65 @@
         <input class="button" type="submit" value="Generate Invoice" />
       </form>
       <div id="invoicePreview" class="invoice-preview" style="display:none;"></div>
-      <button class="button" onclick="window
+      <button class="button" onclick="window.print()" style="display:none;" id="printBtn">Print Invoice</button>
+
+      <h3>Timesheet Log</h3>
+      <div id="timesheetLog" class="log-box"></div>
+    </div>
+  </section>
+
+  <script>
+    function showTab(tab) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(tab).classList.add('active');
+    }
+
+    function unlockAdmin() {
+      const pass = document.getElementById('adminPass').value;
+      if (pass === "admin123") {
+        document.getElementById('adminContent').style.display = 'block';
+        displayTimesheetLog();
+      } else {
+        alert("Incorrect password.");
+      }
+    }
+
+    function generateInvoice() {
+      const name = document.getElementById('clientName').value;
+      const email = document.getElementById('clientEmail').value;
+      const job = document.getElementById('jobDescription').value;
+      const materials = parseFloat(document.getElementById('materialsCost').value).toFixed(2);
+      const labor = parseFloat(document.getElementById('laborCost').value).toFixed(2);
+      const terms = document.getElementById('paymentTerms').value;
+      const total = (parseFloat(materials) + parseFloat(labor)).toFixed(2);
+      const html = `
+        <h3>Invoice</h3>
+        <p><strong>Client:</strong> ${name}<br>
+        <strong>Email:</strong> ${email}</p>
+        <p><strong>Description:</strong><br>${job}</p>
+        <p><strong>Materials:</strong> $${materials}<br>
+        <strong>Labor:</strong> $${labor}</p>
+        <p><strong>Total Due:</strong> <strong>$${total}</strong></p>
+        <p><strong>Payment Terms:</strong> ${terms}</p>
+      `;
+      const preview = document.getElementById('invoicePreview');
+      preview.innerHTML = html;
+      preview.style.display = 'block';
+      document.getElementById('printBtn').style.display = 'inline-block';
+    }
+
+    function saveTimesheet() {
+      const entry = {
+        name: document.getElementById('tsName').value,
+        date: document.getElementById('tsDate').value,
+        job: document.getElementById('tsJob').value,
+        hours: document.getElementById('tsHours').value
+      };
+      const logs = JSON.parse(localStorage.getItem('timesheetLogs') || '[]');
+      logs.push(entry);
+      localStorage.setItem('timesheetLogs', JSON.stringify(logs));
+      alert('Timesheet submitted!');
+      document.querySelector('#timesheet form').reset();
+    }
+
+    function display
